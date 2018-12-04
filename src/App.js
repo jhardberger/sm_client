@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+/**         app containers           **/
+import Login from './Login';
+import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
 
   constructor(){
     super();
     const params = this.getHashParams();
-    console.log(params);
+    console.log(params, '<---------------- in constructor');
   }
 
   getHashParams(){
@@ -23,13 +26,17 @@ class App extends Component {
     }
 
     //returns access token
-    console.log(hashParams);
+    console.log(hashParams, '<------------- get hash params');
     return hashParams;
   }
 
   render() {
     return (
     <div className='App'>
+      <Switch>
+        <Route exact path='/' component={Login} />
+ 
+      </Switch>
       <a href='http://localhost:8888'> Login to Spotify </a>
     </div>
     );
