@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 /**         app containers           **/
 import Login from './Login/index';
+import MainContainer from './MainContainer';
 import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -30,13 +31,15 @@ class App extends Component {
     return hashParams;
   }
 
+  //add a 404 at some point
+
   render() {
     return (
     <div className='App'>
       <Switch>
         <Route exact path='/' component={Login} />
- 
-        </Switch>
+        <Route exact path='/home' component={MainContainer} />
+      </Switch>
       <a href='http://localhost:8888'> Login to Spotify </a>
     </div>
     );
