@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Form, Label, Button } from 'semantic-ui-react';
 
 class Login extends Component {
 	constructor(){
@@ -20,7 +20,7 @@ class Login extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const loginResponse = await fetch('http://localhost:9000/auth', {
+		const loginResponse = await fetch('http://localhost:9000/login', {
 			method: 'POST',
 			credentials: 'include',
 			body: JSON.stringify(this.state),
@@ -38,7 +38,13 @@ class Login extends Component {
 	}
 	render(){
 		return(
-			
+			<Form onSubmit={this.handleSubmit}>
+				<Label> Username</Label>
+				<Form.Input type='text' name='username' onChange={this.handleChange} />
+				<Label> Password</Label>
+				<Form.Input type='password' name='password' onChange={this.handleChange} />
+				<Button type='submit' color='green'>Login</Button>
+			</Form>
 		)
 	}
 }

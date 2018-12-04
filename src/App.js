@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 /**         app containers           **/
-import Login from './Login';
+import Login from './Login/index';
 import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -36,7 +36,7 @@ class App extends Component {
       <Switch>
         <Route exact path='/' component={Login} />
  
-      </Switch>
+        </Switch>
       <a href='http://localhost:8888'> Login to Spotify </a>
     </div>
     );
