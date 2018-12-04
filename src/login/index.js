@@ -33,7 +33,7 @@ class Login extends Component {
 
 		if(parsedResponse.data === 'login successful'){
 			console.log('logged in');
-			this.props.history.push('/user')
+			this.props.history.push('/home')
 		}
 	}
 	render(){
