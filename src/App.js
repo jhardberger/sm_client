@@ -25,8 +25,13 @@ class App extends Component {
       console.log(spotifyApi.getAccessToken(), '<--------- token inserted');
     }
     this.state = {
-      loggedIn: token ? true : false,
-      nowPlaying: { name: 'Not Checked', albumArt: '' }
+      loggedIn: token ? true : false, //do I even need this? 
+      nowPlaying: { 
+        name: 'Not Checked', 
+        artist: 'Not Checked',
+        albumArt: '' 
+      },
+      topSongs: []
     }
   }
 
@@ -56,38 +61,49 @@ class App extends Component {
                 this.setState({
                   nowPlaying: {
                     name: response.item.name,
+                    artist: response.item.artists[0].name,
                     albumArt: response.item.album.images[0].url
                   }
                 });
               })
   }
 
+  //getting top songs
+  getTopSongs(){
+    spotifyApi.getMyTopTracks()
+              .then((response) => {
+                console.log(response);
+
+                this.setState({
+                  topSongs: [...this.state.topSongs, response.items]
+                });
+              })
+  }
+
+  // componentDidMount(){
+  //   this.getTopSongs();
+  //   this.getNowPlaying();
+  // }
+
   //add a 404 at some point
+
 
   render() {
     return (
     <div className='App'>
+      <a href='http://localhost:8888'> Login to Spotify </a>
 
-      <div>
-        <a href='http://localhost:8888'> Login to Spotify </a>
-        <div>
-          Now Playing: { this.state.nowPlaying.name }
-        </div>
-        <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
-        </div>
-        { this.state.loggedIn &&
+      { this.state.loggedIn &&
+        <div id ='buttons'>
           <button onClick={() => this.getNowPlaying()}>
             Check Now Playing
           </button>
-        }
-      </div>
-      
-      <Switch>
-        <Route exact path='/' component={Login} />
-        <Route exact path='/home' component={MainContainer} />
-      </Switch>
-
+           <button onClick={() => this.getTopSongs()}>
+            Check Top Songs
+          </button>
+        </ div>
+      }
+    
     </div>
     );
   }
