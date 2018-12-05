@@ -19,80 +19,77 @@ class MoldContainer extends Component {
 	        tempo: 0,
 	        valence: 0,      
 	    },
-			acousticness_value: 0,
-			danceability_value: 0,
-			energy_value: 0,
-			instrumentalness_value: 0,
-			liveness_value:0,
-			loudness_value: 0,
-			speechiness_value: 0,
-			tempo_value: 0,
-			valence_value: 0
+			// acousticness_value: 0,
+			// danceability_value: 0,
+			// energy_value: 0,
+			// instrumentalness_value: 0,
+			// liveness_value:0,
+			// loudness_value: 0,
+			// speechiness_value: 0,
+			// tempo_value: 0,
+			// valence_value: 0
 		}
 		this.getAudioFeatures = this.props.getAudioFeatures.bind(this);
+		this.addMold = this.props.addMold.bind(this);
 	}
 
-	handleValueChange(e, {value}){
+	// handleValueChange(e, {value}){
+	// 	this.setState({
+	// 		songFeatures: {
+	// 			acousticness: value,
+	// 			danceability: value,
+	// 			energy: value,
+	// 			instrumentalness: value,
+	// 			liveness:value,
+	// 			loudness: value,
+	// 			speechiness: value,
+	// 			tempo: value,
+	// 			valence: value		
+	// 		}
+	// 	})
+	// 	console.log(this.state, '<-------- state');
+	// }
+
+	handleValueChange = (e) => {
 		this.setState({
-			acousticness_value: value,
-			danceability_value: value,
-			energy_value: value,
-			instrumentalness_value: value,
-			liveness_value:value,
-			loudness_value: value,
-			speechiness_value: value,
-			tempo_value: value,
-			valence_value: value		})
-		console.log(this.state);
+			songFeatures: {
+				[e.currentTarget.name]: e.currentTarget.value}
+			})
 	}
 
 	render(){
-		const settings = {
-			start: this.state.songFeatures.acousticness, //migrate these into each slider
-			min: 0,
-			max: 10,
-			step: .001,
-		}
+
 		return(
 			<Grid.Column id='molds' width={1}>
 				<h3>Molds baby</h3>
 				<Button onClick={this.getAudioFeatures}>
 					cl features 
 				</Button>
-				<Form>
-					<Label>Title TK</Label>
+				<Form onSubmit={this.addMold}>
+					<Label>Title</Label>
+					<Form.Input type='string' name='title' placeholder='give this thang a title' />
 					<Label>acousticness</Label>
-					<Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness}/>
+					<Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness} onChange={this.handleValueChange.bind(this)}/>
 					<Label>danceability</Label>
-					<Form.Input type='number' name='danceability' value={this.state.songFeatures.danceability}/>
+					<Form.Input type='number' name='danceability' value={this.state.songFeatures.danceability} onChange={this.handleValueChange.bind(this)}/>
 					<Label>energy</Label>
-					<Form.Input type='number' name='energy' value={this.state.songFeatures.energy}/>
+					<Form.Input type='number' name='energy' value={this.state.songFeatures.energy} onChange={this.handleValueChange.bind(this)}/>
 					<Label>instrumentalness</Label>
-					<Form.Input type='number' name='instrumentalness' value={this.state.songFeatures.instrumentalness}/>
+					<Form.Input type='number' name='instrumentalness' value={this.state.songFeatures.instrumentalness} onChange={this.handleValueChange.bind(this)}/>
 					<Label>liveness</Label>
-					<Form.Input type='number' name='liveness' value={this.state.songFeatures.liveness}/>
+					<Form.Input type='number' name='liveness' value={this.state.songFeatures.liveness} onChange={this.handleValueChange.bind(this)}/>
 					<Label>loudness</Label>
-					<Form.Input type='number' name='loudness' value={this.state.songFeatures.loudness}/>
+					<Form.Input type='number' name='loudness' value={this.state.songFeatures.loudness} onChange={this.handleValueChange.bind(this)}/>
 					<Label>speechiness</Label>
-					<Form.Input type='number' name='speechiness' value={this.state.songFeatures.speechiness}/>
+					<Form.Input type='number' name='speechiness' value={this.state.songFeatures.speechiness} onChange={this.handleValueChange.bind(this)}/>
 					<Label>tempo</Label>
-					<Form.Input type='number' name='tempo' value={this.state.songFeatures.tempo}/>
+					<Form.Input type='number' name='tempo' value={this.state.songFeatures.tempo} onChange={this.handleValueChange.bind(this)}/>
 					<Label>valence</Label>
-					<Form.Input type='number' name='valence' value={this.state.songFeatures.valence}/>
+					<Form.Input type='number' name='valence' value={this.state.songFeatures.valence} onChange={this.handleValueChange.bind(this)}/>
+					<Button type='submit'>Save</Button>
 
 				</Form>
 
-				<div id='sliders'>
-					<Slider color='red' onChange={this.handleValueChange.bind(this)} value={this.state.songFeatures.acousticness} settings={{
-						start: this.state.songFeatures.acousticness,
-						min: 0,
-						max: 10,
-						step: .001 
-					}}/>
-            		<Label color='red'>{this.state.songFeatures.acousticness}</Label>
-					<br/>
-					
-				</div>
 			</Grid.Column>
 		)
 	}
