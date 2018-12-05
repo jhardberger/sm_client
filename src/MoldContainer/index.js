@@ -59,7 +59,7 @@ class MoldContainer extends Component {
 	render(){
 
 		return(
-			<Grid.Column id='molds' width={1}>
+			<div id='molds' width={1}>
 				<h3>Molds baby</h3>
 				<Button onClick={this.props.getAudioFeatures.bind(this)}>
 					cl features 
@@ -89,7 +89,7 @@ class MoldContainer extends Component {
 
 				</Form>
 
-			</Grid.Column>
+			</div>
 		)
 	}
 }

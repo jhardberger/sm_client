@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserContainer from '../UserContainer';
 import LibraryContainer from '../LibraryContainer';
 import MoldContainer from '../MoldContainer';
+// import MoldList from '../MoldList';
 import { Route, Switch } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
  
@@ -33,8 +34,8 @@ class MainContainer extends Component {
         albumArt: '' 
       },
       topSongs: [],
-      currentSongId: '',
       molds: [],
+      currentSongId: '',
     }
   }
 
@@ -118,6 +119,11 @@ class MainContainer extends Component {
       console.log('groovy');
       this.getTopSongs();
       this.getNowPlaying();
+      this.getMolds().then((molds) => {
+        this.setState({molds: molds.data})
+      }).catch((err) => {
+        console.log(err);
+      })
   }
 
 
@@ -138,7 +144,7 @@ class MainContainer extends Component {
       console.log(parsedResponse, '<-------- successfully added mold!');
    
        //do I need my molds in state? maybe... will workt this out later
-       // this.setState({molds: [...this.state.molds, parsedResponse.data]})
+       this.setState({molds: [...this.state.molds, parsedResponse.data]})
 
     }catch(err){
       console.log(err);
@@ -161,9 +167,9 @@ class MainContainer extends Component {
               <Grid.Row id='music' columns={2} >
 
                 <LibraryContainer topSongs={this.state.topSongs}/>
-
-                <MoldContainer getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
-
+                <Grid.Column id='molds'>
+                  <MoldContainer molds={this.state.molds} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
+                  </Grid.Column>
               </Grid.Row>
             </Grid>
         </div>
