@@ -3,6 +3,7 @@ import './App.css';
 /**         app containers           **/
 import Login from './Login/index';
 import MainContainer from './MainContainer';
+import LibraryContainer from './LibraryContainer';
 import { Route, Switch } from 'react-router-dom';
 
 /**         Spotify wrapper          **/
@@ -73,17 +74,17 @@ class App extends Component {
     spotifyApi.getMyTopTracks()
               .then((response) => {
                 console.log(response);
-
                 this.setState({
                   topSongs: [...this.state.topSongs, response.items]
                 });
               })
   }
 
-  // componentDidMount(){
-  //   this.getTopSongs();
-  //   this.getNowPlaying();
-  // }
+  callBoth(){
+      console.log('groovy');
+      this.getTopSongs();
+      this.getNowPlaying();
+  }
 
   //add a 404 at some point
 
@@ -94,14 +95,12 @@ class App extends Component {
       <a href='http://localhost:8888'> Login to Spotify </a>
 
       { this.state.loggedIn &&
-        <div id ='buttons'>
-          <button onClick={() => this.getNowPlaying()}>
-            Check Now Playing
+        <div>
+          <button onClick={() => this.callBoth()}>
+            load those bands
           </button>
-           <button onClick={() => this.getTopSongs()}>
-            Check Top Songs
-          </button>
-        </ div>
+          <LibraryContainer topSongs={this.state.topSongs} />
+        </div>
       }
     
     </div>
