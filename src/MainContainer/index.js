@@ -107,14 +107,19 @@ class MainContainer extends Component {
     console.log(this.state.songFeatures, '<----songFeatures');
   }
 
-
+  getMolds = async () => {
+    const molds = await fetch('http://localhost:00/api/v1/molds');
+    const parsedMolds = await molds.json();
+    return parsedMolds  
+  }
 
   //reset this to component did mount soon
-  callBoth(){
+  componentDidMount(){
       console.log('groovy');
       this.getTopSongs();
       this.getNowPlaying();
   }
+
 
   addMold = async (mold, e) => {
     console.log(mold, '<----- mold');
@@ -124,7 +129,6 @@ class MainContainer extends Component {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(mold),
-        // mode: 'no-cors',//???????
         headers: {
           'Content-Type': 'application/json',
         }
