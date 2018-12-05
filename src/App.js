@@ -36,7 +36,17 @@ class App extends Component {
         albumArt: '' 
       },
       topSongs: [],
-      currentSongId: ''
+      currentSongId: '',
+      songFeatures: {
+        acousticness: 0,
+        danceability: 0,
+        energy: 0,
+        instrumentalness: 0,
+        liveness: 0,
+        loudness: 0,
+        speechiness: 0,
+        tempo: 0,
+        valence: 0,      },
     }
   }
 
@@ -85,15 +95,27 @@ class App extends Component {
               .then((response) => {
                 this.setState({
                   topSongs: [...this.state.topSongs, response.items]
-                });
+                })
               })
   }
 
   getAudioFeatures(){
     spotifyApi.getAudioFeaturesForTrack("0tVzXGFyNPusa1VkHmYDLd")
               .then((response) => {
-                console.log(response);
-              })
+                this.setState({
+                  songFeatures: {
+                    acousticness: response.acousticness,
+                    danceability: response.danceability,
+                    energy: response.energy,
+                    instrumentalness: response.instrumentalness,
+                    liveness: response.liveness,
+                    loudness: response.loudness,
+                    speechiness: response.speechiness,
+                    tempo: response.tempo,
+                    valence: response.valence
+                  }
+                })
+              });
   }
 
   callBoth(){
