@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 /**         app containers           **/
 import Login from './Login/index';
-import MainContainer from './MainContainer';
 import LibraryContainer from './LibraryContainer';
+import UserContainer from './UserContainer';
 import { Route, Switch } from 'react-router-dom';
-
+import { Grid } from 'semantic-ui-react';
+ 
 /**         Spotify wrapper          **/
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -54,6 +55,8 @@ class App extends Component {
     return hashParams;
   }
 
+  //
+
   //test of spotify api wrapper -> but may incorporate later
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
@@ -99,7 +102,19 @@ class App extends Component {
           <button onClick={() => this.callBoth()}>
             load those bands
           </button>
-          <LibraryContainer topSongs={this.state.topSongs} />
+            <Grid id='main' rows={2} columns={2} divided textAlign='center' style={{ height: '80%' }} verticalAlign='top' stackable> 
+              <UserContainer nowPlaying={this.state.nowPlaying}/> 
+              <Grid.Row id='music'>
+
+                <Grid.Column id='library'>
+                  <LibraryContainer topSongs={this.state.topSongs}/>
+                </Grid.Column>
+
+                <Grid.Column id='molds'>
+                </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
         </div>
       }
     
