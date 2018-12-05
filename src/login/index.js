@@ -9,9 +9,11 @@ class Login extends Component {
 			password: ''
 		}
 	}
-	dance = () => {
-		console.log('bust a move by logging in');
+	
+	colorChange = () => {
+		console.log('the rest of the functions are now magically green');
 	}
+
 	handleChange = (e) => {
 		this.setState({
 			[e.currentTarget.name]: e.currentTarget.value
