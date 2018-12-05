@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 const Library = (props) => {
 	console.log(props.topSongs, '<------- in the library');
@@ -18,12 +18,12 @@ const Library = (props) => {
 		return songs
 	})	
 	return(
-		<div>
+		<Grid.Column id='library' width={1}>
 			<h3>All your favorite songs</h3>
 			<ol>
 				{topSongsArr}
 			</ol>	
-		</div>
+		</Grid.Column>
 		)
 }
 export default Library;

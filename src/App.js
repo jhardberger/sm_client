@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 /**         app containers           **/
 import Login from './Login/index';
-import LibraryContainer from './LibraryContainer';
 import UserContainer from './UserContainer';
+import LibraryContainer from './LibraryContainer';
+import MoldContainer from './MoldContainer';
 import { Route, Switch } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
  
@@ -30,11 +31,12 @@ class App extends Component {
       loggedIn: token ? true : false, //do I even need this? 
       userId: userId,
       nowPlaying: { 
-        name: 'Not Checked', 
-        artist: 'Not Checked',
+        name: '', 
+        artist: '',
         albumArt: '' 
       },
-      topSongs: []
+      topSongs: [],
+      currentSongId: ''
     }
   }
 
@@ -56,16 +58,15 @@ class App extends Component {
     return hashParams;
   }
 
-  //getting user info 
-  getUser(){
-    console.log(this.state.userId, '<------ userid');
-    spotifyApi.getUser()
-              .then((response) => {
-                console.log(response, '<---- user info');
-              })
-  }
+  //getting user info                 <------------------ doesn't work atm, will return later
+  // getUser(){
+  //   console.log(this.state.userId, '<------ userid');
+  //   spotifyApi.getUser()
+  //             .then((response) => {
+  //               console.log(response, '<---- user info');
+  //             })
+  // }
 
-  //test of spotify api wrapper -> but may incorporate later
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
               .then((response) => {
@@ -79,7 +80,6 @@ class App extends Component {
               })
   }
 
-  //getting top songs
   getTopSongs(){
     spotifyApi.getMyTopTracks()
               .then((response) => {
@@ -89,11 +89,17 @@ class App extends Component {
               })
   }
 
+  getAudioFeatures(){
+    spotifyApi.getAudioFeaturesForTrack("0tVzXGFyNPusa1VkHmYDLd")
+              .then((response) => {
+                console.log(response);
+              })
+  }
+
   callBoth(){
       console.log('groovy');
       this.getTopSongs();
       this.getNowPlaying();
-      this.getUser();
   }
 
   //add a 404 at some point
@@ -109,19 +115,16 @@ class App extends Component {
           <button onClick={() => this.callBoth()}>
             load those bands
           </button>
-            <Grid id='main' rows={2} columns={2} divided textAlign='center' style={{ height: '80%' }} verticalAlign='top' stackable> 
+            <Grid id='main' divided='vertically'> 
               <UserContainer nowPlaying={this.state.nowPlaying}  /> 
-              <Grid.Row id='music'>
+              <Grid.Row id='music' columns={2} >
 
-                <Grid.Column id='library'>
-                  <LibraryContainer topSongs={this.state.topSongs}/>
-                </Grid.Column>
+                <LibraryContainer topSongs={this.state.topSongs}/>
 
-                <Grid.Column id='molds'>
-                </Grid.Column>
+                <MoldContainer getAudioFeatures={this.getAudioFeatures}/>
 
-            </Grid.Row>
-          </Grid>
+              </Grid.Row>
+            </Grid>
         </div>
       }
     
