@@ -3,25 +3,25 @@ import { Card, Button } from 'semantic-ui-react';
 
 const Library = (props) => {
 	console.log(props.topSongs, '<------- in the library');
-	// const topSongsArr = props.topSongs[0];
-	// console.log(topSongsArr, '<--------- songs array i hope?');
-	
-	const songs = props.topSongs.map((song, i) => {
-		console.log(song, '<----- here is a song');
-		const oneSong = song.map((oneSong) => {
-			console.log(oneSong);
+	//tried to just map out the props.topSongs arr
+	//but for some reason it wouldn't work. 
+	//this looks a little funky, but it does the job 
+	const topSongsArr = props.topSongs.map((arr, i) => {
+		console.log(arr, '<----- here is our array');
+		const songs = arr.map((song) => {
+			console.log(song, '<------- one song');
 			return (
-				<li key={oneSong._id}>{oneSong.name} </li>
+				<li key={song._id}>{song.name}, {song.artists[0].name} </li>
 			)
 			
 		})
-		return oneSong
+		return songs
 	})	
 	return(
 		<div>
 			<h3>All your favorite songs</h3>
 			<ol>
-				{songs}
+				{topSongsArr}
 			</ol>	
 		</div>
 		)
