@@ -5,8 +5,8 @@ import { Slider } from 'react-semantic-ui-range'
 
 
 class MoldContainer extends Component {
-	constructor(props){
-		super(props);
+	constructor(){
+		super();
 		this.state = {
 	      songFeatures: {
 	        acousticness: 0,
@@ -29,8 +29,6 @@ class MoldContainer extends Component {
 			// tempo_value: 0,
 			// valence_value: 0
 		}
-		this.getAudioFeatures = this.props.getAudioFeatures.bind(this);
-		this.addMold = this.props.addMold.bind(this);
 	}
 
 	// handleValueChange(e, {value}){
@@ -53,8 +51,9 @@ class MoldContainer extends Component {
 	handleValueChange = (e) => {
 		this.setState({
 			songFeatures: {
-				[e.currentTarget.name]: e.currentTarget.value}
-			})
+				[e.currentTarget.name]: e.currentTarget.value
+			}
+		})
 	}
 
 	render(){
@@ -62,10 +61,10 @@ class MoldContainer extends Component {
 		return(
 			<Grid.Column id='molds' width={1}>
 				<h3>Molds baby</h3>
-				<Button onClick={this.getAudioFeatures}>
+				<Button onClick={this.props.getAudioFeatures.bind(this)}>
 					cl features 
 				</Button>
-				<Form onSubmit={this.addMold}>
+				<Form onSubmit={this.props.addMold.bind(null, this.state)}>
 					<Label>Title</Label>
 					<Form.Input type='string' name='title' placeholder='give this thang a title' />
 					<Label>acousticness</Label>

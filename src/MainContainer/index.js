@@ -104,6 +104,7 @@ class MainContainer extends Component {
                   }
                 })
               });
+    console.log(this.state.songFeatures, '<----songFeatures');
   }
 
 
@@ -115,43 +116,29 @@ class MainContainer extends Component {
       this.getNowPlaying();
   }
 
-  //add a 404 at some point
-
-  colorfix = async () => {
-    console.log('now everything else is magically green');
-  }
-
   addMold = async (mold, e) => {
-    const customStringify = function (v) {
-      const cache = new Set();
-      return JSON.stringify(v, function (key, value) {
-        if (typeof value === 'object' && value !== null) {
-          if (cache.has(value)) {
-            // Circular reference found, discard key
-            return;
-          }
-          // Store value in our set
-          cache.add(value);
+    console.log(mold, '<----- mold');
+    try{ 
+   
+      const newMold = await fetch('http://localhost:9000/api/v1/molds', {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(mold),
+        // mode: 'no-cors',//???????
+        headers: {
+          'Content-Type': 'application/json',
         }
-        return value;
       });
-    };
+   
+      const parsedResponse = await newMold.json();
+      console.log(parsedResponse, '<-------- successfully added mold!');
+   
+       //do I need my molds in state? maybe... will workt this out later
+       // this.setState({molds: [...this.state.molds, parsedResponse.data]})
 
-    const newMold = await fetch('http://localhost:9000/api/vi/molds', {
-      method: 'POST',
-      credentials: 'include',
-      body: customStringify(mold),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const parsedResponse = await newMold.json();
-    console.log(parsedResponse, '<-------- successfully added mold!');
-
-    //do I need my molds in state? maybe... will workt this out later
-    this.setState({molds: [...this.state.molds, parsedResponse.data]})
-
+    }catch(err){
+      console.log(err);
+    }
   }
 
 
