@@ -59,6 +59,28 @@ class MoldContainer extends Component {
 				<Button onClick={this.getAudioFeatures}>
 					cl features 
 				</Button>
+				<Form>
+					<Label>Title TK</Label>
+					<Label>acousticness</Label>
+					<Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness}/>
+					<Label>danceability</Label>
+					<Form.Input type='number' name='danceability' value={this.state.songFeatures.danceability}/>
+					<Label>energy</Label>
+					<Form.Input type='number' name='energy' value={this.state.songFeatures.energy}/>
+					<Label>instrumentalness</Label>
+					<Form.Input type='number' name='instrumentalness' value={this.state.songFeatures.instrumentalness}/>
+					<Label>liveness</Label>
+					<Form.Input type='number' name='liveness' value={this.state.songFeatures.liveness}/>
+					<Label>loudness</Label>
+					<Form.Input type='number' name='loudness' value={this.state.songFeatures.loudness}/>
+					<Label>speechiness</Label>
+					<Form.Input type='number' name='speechiness' value={this.state.songFeatures.speechiness}/>
+					<Label>tempo</Label>
+					<Form.Input type='number' name='tempo' value={this.state.songFeatures.tempo}/>
+					<Label>valence</Label>
+					<Form.Input type='number' name='valence' value={this.state.songFeatures.valence}/>
+
+				</Form>
 
 				<div id='sliders'>
 					<Slider color='red' onChange={this.handleValueChange.bind(this)} value={this.state.songFeatures.acousticness} settings={{
