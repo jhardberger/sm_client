@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Label, Button } from 'semantic-ui-react';
+/**         .env stuff               **/
+import apiUrl from '../apiUrl';
 
 class Login extends Component {
 	constructor(){
@@ -22,7 +24,7 @@ class Login extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const loginResponse = await fetch('http://localhost:9000/login', {
+		const loginResponse = await fetch(apiUrl + '/login', {
 			method: 'POST',
 			credentials: 'include',
 			body: JSON.stringify(this.state),

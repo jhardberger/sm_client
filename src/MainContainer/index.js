@@ -5,7 +5,9 @@ import MoldContainer from '../MoldContainer';
 // import MoldList from '../MoldList';
 import { Route, Switch } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
- 
+/**         .env stuff               **/
+import apiUrl from '../apiUrl';
+
 /**         Spotify wrapper          **/
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -109,7 +111,7 @@ class MainContainer extends Component {
   }
 
   getMolds = async () => {
-    const molds = await fetch('http://localhost:00/api/v1/molds');
+    const molds = await fetch(apiUrl + '/api/v1/molds');
     const parsedMolds = await molds.json();
     return parsedMolds  
   }
@@ -131,7 +133,7 @@ class MainContainer extends Component {
     console.log(mold, '<----- mold');
     try{ 
    
-      const newMold = await fetch('http://localhost:9000/api/v1/molds', {
+      const newMold = await fetch(apiUrl + '/api/v1/molds', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(mold),

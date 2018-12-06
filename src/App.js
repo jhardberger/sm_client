@@ -4,6 +4,9 @@ import MainContainer from './MainContainer';
 import Login from './Login';
 import { Route, Switch } from 'react-router-dom';
 
+import apiUrl from './apiUrl';
+console.log(apiUrl);
+
 const My404 = () => {
   return(
     <div>
