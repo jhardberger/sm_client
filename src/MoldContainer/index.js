@@ -1,55 +1,30 @@
 import React, { Component } from 'react';
-import { Grid, Button, Input, Label, Form } from 'semantic-ui-react';
-import { Slider } from 'react-semantic-ui-range'
-
-
+import { Grid, Button, Input, Label, Form, Checkbox } from 'semantic-ui-react';
 
 class MoldContainer extends Component {
 	constructor(){
 		super();
 		this.state = {
-	      songFeatures: {
-	        acousticness: 0,
-	        danceability: 0,
-	        energy: 0,
-	        instrumentalness: 0,
-	        liveness: 0,
-	        loudness: 0,
-	        speechiness: 0,
-	        tempo: 0,
-	        valence: 0,      
-	    },
-			// acousticness_value: 0,
-			// danceability_value: 0,
-			// energy_value: 0,
-			// instrumentalness_value: 0,
-			// liveness_value:0,
-			// loudness_value: 0,
-			// speechiness_value: 0,
-			// tempo_value: 0,
-			// valence_value: 0
+			title: '',
+	    	songFeatures: {
+	        	acoustic: false,
+		        danceable: false,
+		        energetic: false,
+		        instrumental: false,
+		        live: false,
+		        spoken: false,
+		        upbeat: false,      
+	    	}	
 		}
 	}
 
-	// handleValueChange(e, {value}){
-	// 	this.setState({
-	// 		songFeatures: {
-	// 			acousticness: value,
-	// 			danceability: value,
-	// 			energy: value,
-	// 			instrumentalness: value,
-	// 			liveness:value,
-	// 			loudness: value,
-	// 			speechiness: value,
-	// 			tempo: value,
-	// 			valence: value		
-	// 		}
-	// 	})
-	// 	console.log(this.state, '<-------- state');
-	// }
+// <Label>acousticness</Label>
+// <Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness} onChange={this.handleValueChange.bind(this)}/>
+		
 
 	handleValueChange = (e) => {
 		this.setState({
+
 			songFeatures: {
 				[e.currentTarget.name]: e.currentTarget.value
 			}
@@ -65,28 +40,17 @@ class MoldContainer extends Component {
 					cl features 
 				</Button>
 				<Form onSubmit={this.props.addMold.bind(null, this.state)}>
-					<Label>Title</Label>
 					<Form.Input type='string' name='title' placeholder='give this thang a title' />
-					<Label>acousticness</Label>
-					<Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness} onChange={this.handleValueChange.bind(this)}/>
-					<Label>danceability</Label>
-					<Form.Input type='number' name='danceability' value={this.state.songFeatures.danceability} onChange={this.handleValueChange.bind(this)}/>
-					<Label>energy</Label>
-					<Form.Input type='number' name='energy' value={this.state.songFeatures.energy} onChange={this.handleValueChange.bind(this)}/>
-					<Label>instrumentalness</Label>
-					<Form.Input type='number' name='instrumentalness' value={this.state.songFeatures.instrumentalness} onChange={this.handleValueChange.bind(this)}/>
-					<Label>liveness</Label>
-					<Form.Input type='number' name='liveness' value={this.state.songFeatures.liveness} onChange={this.handleValueChange.bind(this)}/>
-					<Label>loudness</Label>
-					<Form.Input type='number' name='loudness' value={this.state.songFeatures.loudness} onChange={this.handleValueChange.bind(this)}/>
-					<Label>speechiness</Label>
-					<Form.Input type='number' name='speechiness' value={this.state.songFeatures.speechiness} onChange={this.handleValueChange.bind(this)}/>
-					<Label>tempo</Label>
-					<Form.Input type='number' name='tempo' value={this.state.songFeatures.tempo} onChange={this.handleValueChange.bind(this)}/>
-					<Label>valence</Label>
-					<Form.Input type='number' name='valence' value={this.state.songFeatures.valence} onChange={this.handleValueChange.bind(this)}/>
+					<p>I'd like my mix to lean...</p>
+					<Label>Acoustic</Label><Checkbox slider /><Label>Electric</Label><br />
+					<Label>Danceable</Label><Checkbox slider /><Label>...Not so Much</Label><br />
+					<Label>High Energy</Label><Checkbox slider /><Label>Chill</Label><br />
+					<Label>Instrumental</Label><Checkbox slider /><Label>Vocals</Label><br />
+					<Label>Live</Label><Checkbox slider /><Label>Studio</Label><br />
+					<Label>Spoken Word</Label><Checkbox slider /><Label>Sung Straight Up</Label><br />
+					<Label>Major</Label><Checkbox slider /><Label>Minor</Label><br />
+					<br />
 					<Button type='submit'>Save</Button>
-
 				</Form>
 
 			</div>

@@ -93,17 +93,33 @@ class MainContainer extends Component {
   getAudioFeatures(){
     spotifyApi.getAudioFeaturesForTrack("0tVzXGFyNPusa1VkHmYDLd")
               .then((response) => {
+                const parseBool = (float) => {
+                  console.log(float);
+                  if(Math.round(float) === 1){
+                    console.log('true');
+                    return true
+                  }else{
+                    console.log('false');
+                    return false
+                  }
+                }
+                const acoustic = parseBool(response.acousticness);
+                const danceable = parseBool(response.danceability);
+                const energetic = parseBool(response.energy);
+                const instrumental = parseBool(response.instrumentalness);
+                const live = parseBool(response.liveness);
+                const spoken = parseBool(response.speechiness);
+                const upbeat = parseBool(response.valence);
+
                 this.setState({
                   songFeatures: {
-                    acousticness: response.acousticness,
-                    danceability: response.danceability,
-                    energy: response.energy,
-                    instrumentalness: response.instrumentalness,
-                    liveness: response.liveness,
-                    loudness: response.loudness,
-                    speechiness: response.speechiness,
-                    tempo: response.tempo,
-                    valence: response.valence
+                    acoustic: acoustic,
+                    danceable: danceable,
+                    energetic: energetic,
+                    instrumental: instrumental,
+                    live: live,
+                    spoken: spoken,
+                    upbeat: upbeat
                   }
                 })
               });
@@ -111,14 +127,13 @@ class MainContainer extends Component {
   }
 
   getMolds = async () => {
-    const molds = await fetch(apiUrl + '/api/v1/molds');
+    const molds = await fetch(apiUrl + '/api/v1/molds/');
     const parsedMolds = await molds.json();
     return parsedMolds  
   }
 
   //reset this to component did mount soon
   componentDidMount(){
-      console.log('groovy');
       this.getTopSongs();
       this.getNowPlaying();
       this.getMolds().then((molds) => {
@@ -169,7 +184,7 @@ class MainContainer extends Component {
               <Grid.Row id='music' columns={2} >
 
                 <LibraryContainer topSongs={this.state.topSongs}/>
-                <Grid.Column id='molds'>
+                <Grid.Column id='molds' width={8}>
                   <MoldContainer molds={this.state.molds} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
                   </Grid.Column>
               </Grid.Row>

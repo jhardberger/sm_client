@@ -18,7 +18,7 @@ const Library = (props) => {
 		return songs
 	})	
 	return(
-		<Grid.Column id='library' width={1}>
+		<Grid.Column id='library' width={6}>
 			<h3>All your favorite songs</h3>
 			<ol>
 				{topSongsArr}
