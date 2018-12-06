@@ -37,6 +37,17 @@ class MainContainer extends Component {
       },
       topSongs: [],
       molds: [],
+      moldsToEdit: {
+        title: '',
+        acoustic: false,
+        danceable: false,
+        energetic: false,
+        instrumental: false,
+        live: false,
+        spoken: false,
+        upbeat: false,  
+      },
+      showEditModal: false,
       currentSongId: '',
     }
   }
@@ -59,15 +70,6 @@ class MainContainer extends Component {
     return hashParams;
   }
 
-  //getting user info                 <------------------ doesn't work atm, will return later
-  // getUser(){
-  //   console.log(this.state.userId, '<------ userid');
-  //   spotifyApi.getUser()
-  //             .then((response) => {
-  //               console.log(response, '<---- user info');
-  //             })
-  // }
-
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
               .then((response) => {
@@ -75,7 +77,8 @@ class MainContainer extends Component {
                   nowPlaying: {
                     name: response.item.name,
                     artist: response.item.artists[0].name,
-                    albumArt: response.item.album.images[0].url
+                    albumArt: response.item.album.images[0].url,
+                    id: response.item.id
                   }
                 });
               })
@@ -112,15 +115,15 @@ class MainContainer extends Component {
                 const upbeat = parseBool(response.valence);
 
                 this.setState({
-                  songFeatures: {
-                    acoustic: acoustic,
-                    danceable: danceable,
-                    energetic: energetic,
-                    instrumental: instrumental,
-                    live: live,
-                    spoken: spoken,
-                    upbeat: upbeat
-                  }
+                 
+                  acoustic: acoustic,
+                  danceable: danceable,
+                  energetic: energetic,
+                  instrumental: instrumental,
+                  live: live,
+                  spoken: spoken,
+                  upbeat: upbeat
+
                 })
               });
     console.log(this.state.songFeatures, '<----songFeatures');
@@ -143,11 +146,21 @@ class MainContainer extends Component {
       })
   }
 
-
-  addMold = async (mold, e) => {
+  addMold = async (molds, e) => {
+    e.preventDefault();
+    const mold = {
+      title: 'mama mia',
+      acoustic: true,
+      danceable: true,
+      energetic: true,
+      instrumental: false,
+      live: false,
+      spoken: false,
+      upbeat: true
+    }
     console.log(mold, '<----- mold');
     try{ 
-   
+      
       const newMold = await fetch(apiUrl + '/api/v1/molds', {
         method: 'POST',
         credentials: 'include',
@@ -168,8 +181,83 @@ class MainContainer extends Component {
     }
   }
 
+  deleteMold = async (id) => {
+    const deleteMoldResponse = await fetch(apiUrl + '/api/v1/molds/' + id, {
+      method: 'DELETE'
+    });
+    const deletedMoldParsed = await deleteMoldResponse.json();
+    console.log(deletedMoldParsed, '<----------- successfully deleted!');
+  
+    //removing from state
+    this.setState({molds: this.state.molds.filter((mold) => mold._id !== id)})
+  }
+
+  handleEditChange = (e) => {
+    this.setState({
+      moldToEdit: {
+        ...this.state.moldToEdit, 
+        [e.currentTarget.name]: e.currentTarget.value
+      }
+    }) 
+  }
+
+  closeAndEdit = async (e) => {
+    e.preventDefault();
+
+     try {
+       const editResponse = await fetch(apiUrl + '/api/v1/molds' + this.state.moldToEdit._id, {
+        method: 'PUT',
+        body: JSON.stringify({
+          title: this.state.moldToEdit.title,
+          acoustic: this.state.moldToEdit.acoustic,
+          danceable: this.state.moldToEdit.danceable,
+          energetic: this.state.moldToEdit.energetic,
+          instrumental: this.state.moldToEdit.instrumental,
+          live: this.state.moldToEdit.live,
+          spoken: this.state.moldToEdit.spoken,
+          upbeat: this.state.moldToEdit.upbeat,  
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+       });
+
+       const editResponseParsed = editResponse.json();
+       const newMoldArrayWithEdit = this.state.molds.map((mold) => {
+         if(mold._id === editResponseParsed.data._id){
+          mold = editResponseParsed.data
+         }
+
+         return mold
+       });
+
+       this.setState({
+        showEditModal: false,
+        molds: newMoldArrayWithEdit
+       });
+
+       console.log(editResponseParsed, ' parsed edit');
+
+     } catch(err){
+       console.log(err)
+     }
+      
+  }
+
+  openAndEdit = (moldFromList) => {
+    console.log(moldFromList, '<----- mold to edit');
+
+    this.setState({
+      showEditModal: true,
+      moldToEdit: {
+        ...moldFromList
+      }
+    })
+
+  }
 
   render() {
+
     return (
     <div className='App'>
       <a href='http://localhost:8888'> Login to Spotify </a>
@@ -184,7 +272,7 @@ class MainContainer extends Component {
               <Grid.Row id='music' columns={2} >
 
                 <LibraryContainer topSongs={this.state.topSongs}/>
-                <Grid.Column id='molds' width={8}>
+                <Grid.Column id='molds' width={7}>
                   <MoldContainer molds={this.state.molds} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
                   </Grid.Column>
               </Grid.Row>

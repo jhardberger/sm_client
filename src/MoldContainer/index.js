@@ -6,15 +6,13 @@ class MoldContainer extends Component {
 		super();
 		this.state = {
 			title: '',
-	    	songFeatures: {
-	        	acoustic: false,
-		        danceable: false,
-		        energetic: false,
-		        instrumental: false,
-		        live: false,
-		        spoken: false,
-		        upbeat: false,      
-	    	}	
+        	acoustic: false,
+	        danceable: false,
+	        energetic: false,
+	        instrumental: false,
+	        live: false,
+	        spoken: false,
+	        upbeat: false,      
 		}
 	}
 
@@ -23,33 +21,52 @@ class MoldContainer extends Component {
 		
 
 	handleValueChange = (e) => {
-		this.setState({
-
-			songFeatures: {
+		if(e.currentTarget.name === 'title'){
+			console.log(e.currentTarget, '<---- string');
+			this.setState({
 				[e.currentTarget.name]: e.currentTarget.value
+			})
+		}else{
+			console.log(e.currentTarget, '<----- bool');
+			// if(e.currentTarget.checked){
+			// 		e.currentTarget.value = false;
+			// 	}else{
+			// 		e.currentTarget.value = true;
+			// 	}
+			// 	this.setState({
+			// 			[e.currentTarget.name]: e.currentTarget.value
+			// 	})
 			}
-		})
+	}
+
+	componentDidMount(){
+		this.props.getAudioFeatures.bind(this)
+		console.log(this.state, '<----- current song');
+
 	}
 
 	render(){
-
+		const checkVal = (feature) => {
+			
+		}
 		return(
-			<div id='molds' width={1}>
+			<div id='molds'>
 				<h3>Molds baby</h3>
-				<Button onClick={this.props.getAudioFeatures.bind(this)}>
-					cl features 
-				</Button>
-				<Form onSubmit={this.props.addMold.bind(null, this.state)}>
-					<Form.Input type='string' name='title' placeholder='give this thang a title' />
-					<p>I'd like my mix to lean...</p>
-					<Label>Acoustic</Label><Checkbox slider /><Label>Electric</Label><br />
-					<Label>Danceable</Label><Checkbox slider /><Label>...Not so Much</Label><br />
-					<Label>High Energy</Label><Checkbox slider /><Label>Chill</Label><br />
-					<Label>Instrumental</Label><Checkbox slider /><Label>Vocals</Label><br />
-					<Label>Live</Label><Checkbox slider /><Label>Studio</Label><br />
-					<Label>Spoken Word</Label><Checkbox slider /><Label>Sung Straight Up</Label><br />
-					<Label>Major</Label><Checkbox slider /><Label>Minor</Label><br />
-					<br />
+				<Form id='form' onSubmit={this.props.addMold.bind(null, this.state)}>
+					<div id='inputs'>
+						<Form.Input type='string' name='title' placeholder='give this thang a title' onChange={this.handleValueChange} />
+						<p>I'd like my mix to lean...</p>
+						<div id='sliders'>
+							<Label>Acoustic</Label><Checkbox name='acoustic' onChange={this.handleValueChange} slider /><Label>Electric</Label><br />
+							<Label>Danceable</Label><Checkbox name='danceable' onChange={this.handleValueChange} slider /><Label>...Not so Much</Label><br />
+							<Label>High Energy</Label><Checkbox name='energetic' onChange={this.handleValueChange} slider /><Label>Chill</Label><br />
+							<Label>Instrumental</Label><Checkbox name='instrumental' onChange={this.handleValueChange} slider /><Label>Vocals</Label><br />
+							<Label>Live</Label><Checkbox name='live' onChange={this.handleValueChange} slider /><Label>Studio</Label><br />
+							<Label>Spoken Word</Label><Checkbox name='spoken' onChange={this.handleValueChange} slider /><Label>Sung Straight Up</Label><br />
+							<Label>Major</Label><Checkbox name='upbeat' onChange={this.handleValueChange} slider /><Label>Minor</Label><br />
+						</div>
+						<br />
+					</div>
 					<Button type='submit'>Save</Button>
 				</Form>
 

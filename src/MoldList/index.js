@@ -10,7 +10,8 @@ const MoldList = (props) => {
 					<Card.Description>{mold.songFeatures}</Card.Description>
 				</Card.Content>
 				<Card.Content extra>
-					Edit, Delete tk
+					<Button onClick={props.openAndEdit.bind(null, mold)}>Edit</Button>
+          			<Button onClick={props.deleteMold.bind(null, mold._id)}>Delete</Button>
 				</Card.Content>
 			</Card>
 		)

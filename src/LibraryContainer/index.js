@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, List, Image } from 'semantic-ui-react';
 
 const Library = (props) => {
 	console.log(props.topSongs, '<------- in the library');
@@ -11,18 +11,25 @@ const Library = (props) => {
 		const songs = arr.map((song) => {
 			console.log(song, '<------- one song');
 			return (
-				<li key={song._id}>{song.name}, {song.artists[0].name} </li>
+				<List.Item key={song._id}>
+					<Image Avatar src={song.album.images[0].url} height='60' />
+					<List.Content>
+						<List.Header>{song.name}</List.Header>
+						{song.artists[0].name} 
+					</List.Content>
+				 
+				</List.Item>
 			)
 			
 		})
 		return songs
 	})	
 	return(
-		<Grid.Column id='library' width={6}>
+		<Grid.Column id='library' width={7}>
 			<h3>All your favorite songs</h3>
-			<ol>
+			<List>
 				{topSongsArr}
-			</ol>	
+			</List>	
 		</Grid.Column>
 		)
 }
