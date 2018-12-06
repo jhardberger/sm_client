@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MainContainer from './MainContainer';
-import Login from './Login/index';
+import Login from './LoginContainer';
 import { Route, Switch } from 'react-router-dom';
 /**         .env stuff               **/
 import apiUrl from './apiUrl';
