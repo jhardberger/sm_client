@@ -26,10 +26,12 @@ const Library = (props) => {
 	})	
 	return(
 		<Grid.Column id='library' width={7}>
-			<h3>All your favorite songs</h3>
-			<List>
-				{topSongsArr}
-			</List>	
+			<div>
+				<h3>All your favorite songs</h3>
+				<List id='songsArea'>
+					{topSongsArr}
+				</List>	
+			</div>
 		</Grid.Column>
 		)
 }

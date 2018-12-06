@@ -7,9 +7,13 @@ class UserContainer extends Component {
 		return(
 
 			<Grid.Row id='user'>
-          		<img src={this.props.nowPlaying.albumArt} style={{ height: 150 }}/>
+          		<img src={this.props.nowPlaying.albumArt} style={{ height: 100 }}/>
           		<div> 
-          			Now Playing: {this.props.nowPlaying.name}, {this.props.nowPlaying.artist} 
+          			<h3>Now Playing</h3>
+          			<p id='nowPlaying'>
+	          			<b>{this.props.nowPlaying.name}</b><br/> 
+	          			{this.props.nowPlaying.artist} 
+	          		</p>
           		</div>
 			</Grid.Row>
 			

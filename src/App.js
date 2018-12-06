@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MainContainer from './MainContainer';
 import Login from './LoginContainer';
+import Header from './Header';
 import { Route, Switch } from 'react-router-dom';
 /**         .env stuff               **/
 import apiUrl from './apiUrl';
@@ -20,6 +21,7 @@ class App extends Component {
   render(){
     return(
       <div className="App">
+        <Header /> 
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/home" component={MainContainer}/>

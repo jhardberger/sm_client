@@ -1,8 +1,70 @@
+body {
+	background-color: black;
+}
+
 div {
 	margin: 10px 10px 0 10px;
 }
 
-#sliders{
-	display: flex-box;
+#molds{
+	justify-content: center;
+}
+
+#header{
+	background-color: black;
+	padding: 35px;
+}
+
+h1{
+	font-family: 'Bungee Shade', cursive;
+	font-size: 60px; 
+	text-align: center;
+	color: Cornsilk;
+}
+
+#spotAuth{
+	background-color: Cornsilk;
+	color: black;
+	padding: 3px; 
+	border-radius: 5px; 
+}
+
+#main{
+	background-color: white;
+	border-radius: 5px;
+	font-family: 'Roboto', sans-serif;
+}
+
+h3{
+	font-family: 'Bungee Shade', cursive;
+}
+
+#nowPlaying{
+	text-align: center;
+	border: 1px black solid;
+}
+
+#molds {
+	background-color: Gainsboro;
+	border-radius: 5px;
+}
+
+#molds h3 {
+	text-align: center;
+
+} 
+
+#library{
+	background-color: Gainsboro;
+	border-radius: 5px;
+}
+
+#library h3{
+	text-align: center;
+
+}
+
+.sliders {
+	display: flex;
 	justify-content: space-between;
 }
