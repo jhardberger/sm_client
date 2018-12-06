@@ -11,7 +11,7 @@ const Library = (props) => {
 		const songs = arr.map((song) => {
 			console.log(song, '<------- one song');
 			return (
-				<List.Item key={song._id}>
+				<List.Item key={song._id} onClick={props.retrieveSong.bind(null, song)}>
 					<Image Avatar src={song.album.images[0].url} height='60' />
 					<List.Content>
 						<List.Header>{song.name}</List.Header>

@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
-import { Grid, Button, Input, Label, Form, Checkbox } from 'semantic-ui-react';
+import { Grid, Button, Input, Label, Form, Checkbox, Image } from 'semantic-ui-react';
 
 class MoldContainer extends Component {
 	constructor(){
 		super();
-		this.state = {
-			title: '',
-        	acoustic: false,
-	        danceable: false,
-	        energetic: false,
-	        instrumental: false,
-	        live: false,
-	        spoken: false,
-	        upbeat: false,      
-		}
+		// this.state = {
+		// 	title: '',
+  //       	acoustic: false,
+	 //        danceable: false,
+	 //        energetic: false,
+	 //        instrumental: false,
+	 //        live: false,
+	 //        spoken: false,
+	 //        upbeat: false,      
+		// }
 	}
-
-// <Label>acousticness</Label>
-// <Form.Input type='number' name='acousticness' value={this.state.songFeatures.acousticness} onChange={this.handleValueChange.bind(this)}/>
-		
 
 	handleValueChange = (e) => {
 		if(e.currentTarget.name === 'title'){
@@ -39,23 +35,16 @@ class MoldContainer extends Component {
 			}
 	}
 
-	componentDidMount(){
-		this.props.getAudioFeatures.bind(this)
-		console.log(this.state, '<----- current song');
-
-	}
-
 	render(){
-		const checkVal = (feature) => {
-			
-		}
+	
 		return(
 			<div id='molds'>
-				<h3>Molds baby</h3>
+				<h3>Curent Grind</h3>
+				<img src='' />
 				<Form id='form' onSubmit={this.props.addMold.bind(null, this.state)}>
 					<div id='inputs'>
 						<Form.Input type='string' name='title' placeholder='give this thang a title' onChange={this.handleValueChange} />
-						<p>I'd like my mix to lean...</p>
+						<p>This playlist is going to be...</p>
 						<div id='sliders'>
 							<Label>Acoustic</Label><Checkbox name='acoustic' onChange={this.handleValueChange} slider /><Label>Electric</Label><br />
 							<Label>Danceable</Label><Checkbox name='danceable' onChange={this.handleValueChange} slider /><Label>...Not so Much</Label><br />
@@ -69,7 +58,6 @@ class MoldContainer extends Component {
 					</div>
 					<Button type='submit'>Save</Button>
 				</Form>
-
 			</div>
 		)
 	}

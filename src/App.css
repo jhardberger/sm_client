@@ -1,4 +1,8 @@
 div {
-	border: dotted green 1px;
 	margin: 10px 10px 0 10px;
+}
+
+#sliders{
+	display: flex-box;
+	justify-content: space-between;
 }

@@ -33,11 +33,22 @@ class MainContainer extends Component {
       nowPlaying: { 
         name: '', 
         artist: '',
-        albumArt: '' 
+        albumArt: '',
+        id: '' 
       },
       topSongs: [],
       molds: [],
-      moldsToEdit: {
+      newMold: {
+        title: '',
+        acoustic: false,
+        danceable: false,
+        energetic: false,
+        instrumental: false,
+        live: false,
+        spoken: false,
+        upbeat: false,  
+      },
+      moldToEdit: {
         title: '',
         acoustic: false,
         danceable: false,
@@ -48,7 +59,12 @@ class MainContainer extends Component {
         upbeat: false,  
       },
       showEditModal: false,
-      currentSongId: '',
+      currentSeed: {
+        name: '', 
+        artist: '',
+        albumArt: '',
+        id: '' 
+      }
     }
   }
 
@@ -94,7 +110,7 @@ class MainContainer extends Component {
   }
 
   getAudioFeatures(){
-    spotifyApi.getAudioFeaturesForTrack("0tVzXGFyNPusa1VkHmYDLd")
+    spotifyApi.getAudioFeaturesForTrack(this.state.currentSeed.id)
               .then((response) => {
                 const parseBool = (float) => {
                   console.log(float);
@@ -115,18 +131,30 @@ class MainContainer extends Component {
                 const upbeat = parseBool(response.valence);
 
                 this.setState({
-                 
-                  acoustic: acoustic,
-                  danceable: danceable,
-                  energetic: energetic,
-                  instrumental: instrumental,
-                  live: live,
-                  spoken: spoken,
-                  upbeat: upbeat
-
+                  newMold: {
+                    acoustic: acoustic,
+                    danceable: danceable,
+                    energetic: energetic,
+                    instrumental: instrumental,
+                    live: live,
+                    spoken: spoken,
+                    upbeat: upbeat
+                  }
                 })
               });
     console.log(this.state.songFeatures, '<----songFeatures');
+  }
+
+  retrieveSong = async (song) => {
+    console.log(song, '<------------- current seed');
+    this.setState({
+      currentSeed:{
+        name: song.name,
+        artist: song.artists[0].name,
+        albumArt: song.album.images[0].url,
+        id: song.id
+      }
+    });
   }
 
   getMolds = async () => {
@@ -139,6 +167,7 @@ class MainContainer extends Component {
   componentDidMount(){
       this.getTopSongs();
       this.getNowPlaying();
+      this.getAudioFeatures();
       this.getMolds().then((molds) => {
         this.setState({molds: molds.data})
       }).catch((err) => {
@@ -149,14 +178,16 @@ class MainContainer extends Component {
   addMold = async (molds, e) => {
     e.preventDefault();
     const mold = {
-      title: 'mama mia',
-      acoustic: true,
-      danceable: true,
-      energetic: true,
-      instrumental: false,
-      live: false,
-      spoken: false,
-      upbeat: true
+      newMold: {
+            title: 'mama mia',
+            acoustic: true,
+            danceable: true,
+            energetic: true,
+            instrumental: false,
+            live: false,
+            spoken: false,
+            upbeat: true
+      }
     }
     console.log(mold, '<----- mold');
     try{ 
@@ -264,17 +295,14 @@ class MainContainer extends Component {
 
       { this.state.loggedIn &&
         <div>
-          <button onClick={() => this.callBoth()}>
-            load those bands
-          </button>
             <Grid id='main' divided='vertically'> 
               <UserContainer nowPlaying={this.state.nowPlaying}  /> 
               <Grid.Row id='music' columns={2} >
 
-                <LibraryContainer topSongs={this.state.topSongs}/>
+                <LibraryContainer topSongs={this.state.topSongs} retrieveSong={this.retrieveSong}/>
                 <Grid.Column id='molds' width={7}>
-                  <MoldContainer molds={this.state.molds} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
-                  </Grid.Column>
+                  <MoldContainer molds={this.state.molds} currentSeed={this.state.currentSeed} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
+                </Grid.Column>
               </Grid.Row>
             </Grid>
         </div>
