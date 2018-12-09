@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import UserContainer from '../UserContainer';
 import LibraryContainer from '../LibraryContainer';
 import MoldContainer from '../MoldContainer';
-// import MoldList from '../MoldList';
+import MoldList from '../MoldList';
 import { Route, Switch } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 /**         .env stuff               **/
 import apiUrl from '../apiUrl';
-
 /**         Spotify wrapper          **/
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -113,7 +112,6 @@ class MainContainer extends Component {
     spotifyApi.getAudioFeaturesForTrack(this.state.currentSeed.id)
               .then((response) => {
                 const parseBool = (float) => {
-                  console.log(float);
                   if(Math.round(float) === 1){
                     console.log('true');
                     return true
@@ -177,25 +175,26 @@ class MainContainer extends Component {
 
   addMold = async (molds, e) => {
     e.preventDefault();
-    const mold = {
-      newMold: {
-            title: 'mama mia',
-            acoustic: true,
-            danceable: true,
-            energetic: true,
-            instrumental: false,
-            live: false,
-            spoken: false,
-            upbeat: true
-      }
-    }
-    console.log(mold, '<----- mold');
+    // const mold = {
+    //       //this is a test
+    //   newMold: {
+    //         title: 'mama mia',
+    //         acoustic: true,
+    //         danceable: true,
+    //         energetic: true,
+    //         instrumental: false,
+    //         live: false,
+    //         spoken: false,
+    //         upbeat: true
+    //   }
+    // }
+    console.log(molds, '<----- molds');
     try{ 
       
       const newMold = await fetch(apiUrl + '/api/v1/molds', {
         method: 'POST',
         credentials: 'include',
-        body: JSON.stringify(mold),
+        body: JSON.stringify(molds),
         headers: {
           'Content-Type': 'application/json',
         }
@@ -301,6 +300,8 @@ class MainContainer extends Component {
                 <LibraryContainer topSongs={this.state.topSongs} retrieveSong={this.retrieveSong}/>
                 <Grid.Column id='molds' width={7}>
                   <MoldContainer molds={this.state.molds} currentSeed={this.state.currentSeed} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
+                  <MoldList molds={this.state.molds} deleteMold={this.deleteMold} openAndEdit={this.openAndEdit} />
+
                 </Grid.Column>
               </Grid.Row>
             </Grid>
