@@ -16,15 +16,15 @@ class MainContainer extends Component {
   constructor(){
     super();
     const params = this.getHashParams();
-    console.log(params, '<---------------- in constructor');
+    // console.log(params, '<---------------- in constructor');
     const userId = params.user_id; //will change this later 
     const token = params.access_token; 
       //conects app to the wrapper if token 
       //now we can make api calls
     if (token) {
-      console.log(token, '<----------------- token');
+      // console.log(token, '<----------------- token');
       spotifyApi.setAccessToken(token);
-      console.log(spotifyApi.getAccessToken(), '<--------- token inserted');
+      // console.log(spotifyApi.getAccessToken(), '<--------- token inserted');
     }
     this.state = {
       loggedIn: token ? true : false, //do I even need this? 
@@ -81,7 +81,7 @@ class MainContainer extends Component {
     }
 
     //returns access token
-    console.log(hashParams, '<------------- get hash params');
+    // console.log(hashParams, '<------------- get hash params');
     return hashParams;
   }
 
@@ -139,8 +139,9 @@ class MainContainer extends Component {
                     upbeat: upbeat
                   }
                 })
+                console.log(this.state.newMold, '<----- new mold');
               });
-    console.log(this.state.songFeatures, '<----songFeatures');
+    // console.log(this.state.songFeatures, '<----songFeatures');
   }
 
   retrieveSong = async (song) => {
@@ -156,7 +157,7 @@ class MainContainer extends Component {
   }
 
   getMolds = async () => {
-    const molds = await fetch(apiUrl + '/api/v1/molds/');
+    const molds = await fetch(apiUrl + '/api/v1/molds');
     const parsedMolds = await molds.json();
     return parsedMolds  
   }
@@ -175,22 +176,9 @@ class MainContainer extends Component {
 
   addMold = async (molds, e) => {
     e.preventDefault();
-    // const mold = {
-    //       //this is a test
-    //   newMold: {
-    //         title: 'mama mia',
-    //         acoustic: true,
-    //         danceable: true,
-    //         energetic: true,
-    //         instrumental: false,
-    //         live: false,
-    //         spoken: false,
-    //         upbeat: true
-    //   }
-    // }
-    console.log(molds, '<----- molds');
+
     try{ 
-      
+      console.log(this.state);
       const newMold = await fetch(apiUrl + '/api/v1/molds', {
         method: 'POST',
         credentials: 'include',

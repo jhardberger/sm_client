@@ -65,7 +65,12 @@ h3{
 
 }
 
-.sliders {
-	display: flex;
-	justify-content: space-between;
+#seed_container{
+	display: inline-flex;
+	align-items: center;
+	padding-left: 15px;
+}
+
+#seed_container p {
+	padding-left: 10px;
 }
