@@ -27,13 +27,16 @@ class MoldContainer extends Component {
 				}
 			})
 		}else{
-			console.log(e.currentTarget.children[0].name, '<----- bool');
-			let value = null; 
-			if(e.currentTarget.attributes.class === 'ui checked fitted checkbox'){
-					value = false; 
-				}else{
+			console.log(e.currentTarget.attributes.class.value, '<----- checked?');
+			let value = true; 
+			if(e.currentTarget.attributes.class.value === "ui checked fitted checkbox"){
 					value = true; 
+					console.log(value, '<----- true?');
+				}else{
+					value = false; 
+					console.log(value, '<----- false?');
 				}
+			console.log(e.currentTarget.children[0].name, '<----- attribute');
 			this.setState({
 				newMold: {
 					[e.currentTarget.children[0].name]: value
