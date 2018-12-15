@@ -5,16 +5,15 @@ class MoldContainer extends Component {
 	constructor(){
 		super();
 		this.state = {
-			newMold: {
-		        title: '',
-		        acoustic: false,
-		        danceable: false,
-		        energetic: false,
-		        instrumental: false,
-		        live: false,
-		        spoken: false,
-		        upbeat: false,  
-		    }
+	        title: '',
+		    seed_song_id: '',
+		    acoustic: true,
+		    danceable: true,
+		    energetic: true,
+		    instrumental: true,
+		    live: true,
+		    spoken: true,
+		    upbeat: true,  
 		}
 	}
 
@@ -22,14 +21,12 @@ class MoldContainer extends Component {
 		if(e.currentTarget.name === 'title'){
 			console.log(e.currentTarget, '<---- string');
 			this.setState({
-				newMold: {
-					[e.currentTarget.name]: e.currentTarget.value
-				}
+				[e.currentTarget.name]: e.currentTarget.value
 			})
 		}else{
 			console.log(e.currentTarget.attributes.class.value, '<----- checked?');
 			let value = true; 
-			if(e.currentTarget.attributes.class.value === "ui checked fitted checkbox"){
+			if(e.currentTarget.attributes.class.value === "ui checked fitted slider checkbox"){
 					value = true; 
 					console.log(value, '<----- true?');
 				}else{
@@ -38,9 +35,7 @@ class MoldContainer extends Component {
 				}
 			console.log(e.currentTarget.children[0].name, '<----- attribute');
 			this.setState({
-				newMold: {
-					[e.currentTarget.children[0].name]: value
-				}
+				[e.currentTarget.children[0].name]: value
 			})
 		}
 		console.log(this.state, '<------ moldcontainer state');
@@ -58,36 +53,36 @@ class MoldContainer extends Component {
 		      			{this.props.currentSeed.artist} 
           			</p>
 	          	</div>
-				<Form id='form' onSubmit={this.props.addMold.bind(null, this.state)}>
+				<Form id='form' onSubmit={this.props.addMold.bind(this, this.state)}>
 					<div id='inputs'>
 						<Form.Input type='string' name='title' placeholder='give this thang a title' onChange={this.handleValueChange} />
-						This playlist is going to be...
+						This playlist is going to be...<br />
 								<Label>Acoustic</Label>
-								<Checkbox name='acoustic' onChange={this.handleValueChange} />
+								<Form.Checkbox name='acoustic' onChange={this.handleValueChange} slider/>
 								<Label>Electric</Label><br />
 
 								<Label>Danceable</Label>
-								<Form.Checkbox name='danceable' onChange={this.handleValueChange} />
+								<Form.Checkbox name='danceable' onChange={this.handleValueChange} slider/>
 								<Label>...Not so Much</Label><br />
 
 								<Label>High Energy</Label>
-								<Form.Checkbox name='energetic' onChange={this.handleValueChange} />
+								<Form.Checkbox name='energetic' onChange={this.handleValueChange} slider/>
 								<Label>Chill</Label><br />
 
 								<Label>Instrumental</Label>
-								<Form.Checkbox name='instrumental' onChange={this.handleValueChange} />
+								<Form.Checkbox name='instrumental' onChange={this.handleValueChange} slider/>
 								<Label>Vocals</Label><br />
 
 								<Label>Live</Label>
-								<Form.Checkbox name='live' onChange={this.handleValueChange} />
+								<Form.Checkbox name='live' onChange={this.handleValueChange} slider/>
 								<Label>Studio</Label><br />
 
 								<Label>Spoken Word</Label>
-								<Form.Checkbox name='spoken' onChange={this.handleValueChange} />
+								<Form.Checkbox name='spoken' onChange={this.handleValueChange} slider/>
 								<Label>Sung Straight Up</Label><br />
 
 								<Label>Major</Label>
-								<Form.Checkbox name='upbeat' onChange={this.handleValueChange} />
+								<Form.Checkbox name='upbeat' onChange={this.handleValueChange} slider/>
 								<Label>Minor</Label><br />
 						<br />
 					</div>

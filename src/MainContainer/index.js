@@ -37,18 +37,9 @@ class MainContainer extends Component {
       },
       topSongs: [],
       molds: [],
-      newMold: {
-        title: '',
-        acoustic: false,
-        danceable: false,
-        energetic: false,
-        instrumental: false,
-        live: false,
-        spoken: false,
-        upbeat: false,  
-      },
       moldToEdit: {
         title: '',
+        seed_song_id: '',
         acoustic: false,
         danceable: false,
         energetic: false,
@@ -85,6 +76,7 @@ class MainContainer extends Component {
     return hashParams;
   }
 
+  //this, getTopSongs and getAudioFeatures all load at startup -------------------------
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
               .then((response) => {
@@ -111,6 +103,8 @@ class MainContainer extends Component {
   getAudioFeatures(){
     spotifyApi.getAudioFeaturesForTrack(this.state.currentSeed.id)
               .then((response) => {
+
+                //this turns floats into easier-to-work-with bools
                 const parseBool = (float) => {
                   if(Math.round(float) === 1){
                     console.log('true');
@@ -120,6 +114,8 @@ class MainContainer extends Component {
                     return false
                   }
                 }
+
+                //using it on returned data from spotify api
                 const acoustic = parseBool(response.acousticness);
                 const danceable = parseBool(response.danceability);
                 const energetic = parseBool(response.energy);
@@ -144,6 +140,7 @@ class MainContainer extends Component {
     // console.log(this.state.songFeatures, '<----songFeatures');
   }
 
+  //onclick for visible songs - selects clicked as currentSeed
   retrieveSong = async (song) => {
     console.log(song, '<------------- current seed');
     this.setState({
@@ -156,13 +153,13 @@ class MainContainer extends Component {
     });
   }
 
+  //loads molds to moldList
   getMolds = async () => {
     const molds = await fetch(apiUrl + '/api/v1/molds');
     const parsedMolds = await molds.json();
     return parsedMolds  
   }
 
-  //reset this to component did mount soon
   componentDidMount(){
       this.getTopSongs();
       this.getNowPlaying();
@@ -174,25 +171,27 @@ class MainContainer extends Component {
       })
   }
 
+  //mold CRUD ----------------------------------------------
   addMold = async (molds, e) => {
     e.preventDefault();
+    console.log(e, '<--------- e ');
+    console.log(molds, '<--------- molds');
 
     try{ 
-      console.log(this.state);
       const newMold = await fetch(apiUrl + '/api/v1/molds', {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(molds),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         }
       });
-   
+      console.log(newMold, '<------- new mold you dingus');
       const parsedResponse = await newMold.json();
       console.log(parsedResponse, '<-------- successfully added mold!');
    
        //do I need my molds in state? maybe... will workt this out later
-       this.setState({molds: [...this.state.molds, parsedResponse.data]})
+       // this.setState({molds: [...this.state.molds, parsedResponse.data]})
 
     }catch(err){
       console.log(err);
@@ -287,7 +286,7 @@ class MainContainer extends Component {
 
                 <LibraryContainer topSongs={this.state.topSongs} retrieveSong={this.retrieveSong}/>
                 <Grid.Column id='molds' width={7}>
-                  <MoldContainer molds={this.state.molds} currentSeed={this.state.currentSeed} getAudioFeatures={this.getAudioFeatures} addMold={this.addMold} />
+                  <MoldContainer handleValueChange={this.handleValueChange} currentSeed={this.state.currentSeed} addMold={this.addMold} />
                   <MoldList molds={this.state.molds} deleteMold={this.deleteMold} openAndEdit={this.openAndEdit} />
 
                 </Grid.Column>
