@@ -17,7 +17,6 @@ class MainContainer extends Component {
     super();
     const params = this.getHashParams();
     // console.log(params, '<---------------- in constructor');
-    const userId = params.user_id; //will change this later 
     const token = params.access_token; 
       //conects app to the wrapper if token 
       //now we can make api calls
@@ -28,7 +27,6 @@ class MainContainer extends Component {
     }
     this.state = {
       loggedIn: token ? true : false, //do I even need this? 
-      userId: userId,
       nowPlaying: { 
         name: '', 
         artist: '',
@@ -80,14 +78,15 @@ class MainContainer extends Component {
   getNowPlaying(){
     spotifyApi.getMyCurrentPlaybackState()
               .then((response) => {
-                this.setState({
-                  nowPlaying: {
-                    name: response.item.name,
-                    artist: response.item.artists[0].name,
-                    albumArt: response.item.album.images[0].url,
-                    id: response.item.id
-                  }
-                });
+                console.log(response, '<---- response for current');
+                // this.setState({
+                //   nowPlaying: {
+                //     name: response.item.name,
+                //     artist: response.item.artists[0].name,
+                //     albumArt: response.item.album.images[0].url,
+                //     id: response.item.id
+                //   }
+                // });
               })
   }
 
