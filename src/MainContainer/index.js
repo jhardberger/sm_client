@@ -146,14 +146,25 @@ class MainContainer extends Component {
   //onclick for visible songs - selects clicked as currentSeed
   retrieveSong = async (song) => {
     console.log(song, '<------------- current seed');
-    this.setState({
-      currentSeed:{
-        name: song.name,
-        artist: song.artists[0].name,
-        albumArt: song.album.images[0].url,
-        id: song.id
-      }
-    });
+    if(song.artists){
+        this.setState({
+          currentSeed:{
+            name: song.name,
+            artist: song.artists[0].name,
+            albumArt: song.album.images[0].url,
+            id: song.id
+          }
+        });
+    }else{
+      this.setState({
+        currentSeed:{
+          name: song.name,
+          artist: song.artist,
+          albumArt: song.albumArt,
+          id: song.id
+        }
+      });
+    }
   }
 
   //loads molds to moldList
@@ -304,7 +315,7 @@ class MainContainer extends Component {
       { this.state.loggedIn &&
         <div>
             <Grid id='main' divided='vertically'> 
-              <UserContainer nowPlaying={this.state.nowPlaying}  /> 
+              <UserContainer nowPlaying={this.state.nowPlaying} retrieveSong={this.retrieveSong}/> 
               <Grid.Row id='music' columns={2} >
 
                 <LibraryContainer topSongs={this.state.topSongs} retrieveSong={this.retrieveSong}/>
