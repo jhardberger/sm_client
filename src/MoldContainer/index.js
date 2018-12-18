@@ -27,12 +27,12 @@ class MoldContainer extends Component {
 			console.log(e.currentTarget.attributes.class.value, '<----- checked?');
 			let value = true; 
 			if(e.currentTarget.attributes.class.value === "ui checked fitted slider checkbox"){
-					value = true; 
-					console.log(value, '<----- true?');
-				}else{
-					value = false; 
-					console.log(value, '<----- false?');
-				}
+				value = true; 
+				console.log(value, '<----- true?');
+			}else{
+				value = false; 
+				console.log(value, '<----- false?');
+			}
 			console.log(e.currentTarget.children[0].name, '<----- attribute');
 			this.setState({
 				[e.currentTarget.children[0].name]: value
@@ -53,37 +53,37 @@ class MoldContainer extends Component {
 		      			{this.props.currentSeed.artist} 
           			</p>
 	          	</div>
-				<Form id='form' onSubmit={this.props.addMold.bind(this, this.state)}>
-					<div id='inputs'>
+				<Form class='form' onSubmit={this.props.addMold.bind(this, this.state)}>
+					<div class='inputs'>
 						<Form.Input type='string' name='title' placeholder='give this thang a title' onChange={this.handleValueChange} />
-						This playlist is going to be...<br />
-								<Label>Acoustic</Label>
-								<Form.Checkbox name='acoustic' onChange={this.handleValueChange} slider/>
-								<Label>Electric</Label><br />
+							This playlist is going to be...<br />
+							<Label>Acoustic</Label>
+							<Form.Checkbox name='acoustic' onChange={this.handleValueChange} slider/>
+							<Label>Electric</Label><br />
 
-								<Label>Danceable</Label>
-								<Form.Checkbox name='danceable' onChange={this.handleValueChange} slider/>
-								<Label>...Not so Much</Label><br />
+							<Label>Danceable</Label>
+							<Form.Checkbox name='danceable' onChange={this.handleValueChange} slider/>
+							<Label>...Not so Much</Label><br />
 
-								<Label>High Energy</Label>
-								<Form.Checkbox name='energetic' onChange={this.handleValueChange} slider/>
-								<Label>Chill</Label><br />
+							<Label>High Energy</Label>
+							<Form.Checkbox name='energetic' onChange={this.handleValueChange} slider/>
+							<Label>Chill</Label><br />
 
-								<Label>Instrumental</Label>
-								<Form.Checkbox name='instrumental' onChange={this.handleValueChange} slider/>
-								<Label>Vocals</Label><br />
+							<Label>Instrumental</Label>
+							<Form.Checkbox name='instrumental' onChange={this.handleValueChange} slider/>
+							<Label>Vocals</Label><br />
 
-								<Label>Live</Label>
-								<Form.Checkbox name='live' onChange={this.handleValueChange} slider/>
-								<Label>Studio</Label><br />
+							<Label>Live</Label>
+							<Form.Checkbox name='live' onChange={this.handleValueChange} slider/>
+							<Label>Studio</Label><br />
 
-								<Label>Spoken Word</Label>
-								<Form.Checkbox name='spoken' onChange={this.handleValueChange} slider/>
-								<Label>Sung Straight Up</Label><br />
+							<Label>Spoken Word</Label>
+							<Form.Checkbox name='spoken' onChange={this.handleValueChange} slider/>
+							<Label>Sung Straight Up</Label><br />
 
-								<Label>Major</Label>
-								<Form.Checkbox name='upbeat' onChange={this.handleValueChange} slider/>
-								<Label>Minor</Label><br />
+							<Label>Major</Label>
+							<Form.Checkbox name='upbeat' onChange={this.handleValueChange} slider/>
+							<Label>Minor</Label><br />
 						<br />
 					</div>
 					<Button type='submit'>Save</Button>
