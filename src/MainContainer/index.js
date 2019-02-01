@@ -98,6 +98,16 @@ class MainContainer extends Component {
               })
   }
 
+  //playlist logic  ----------------------------------------
+
+  getRecommended(){
+    spotifyApi.getRecommendations()
+              .then((response) => {
+                console.log(response, '<------ recommended songs response');
+              })
+  }
+
+
 /**           NOTE              **/
 //this currently doesn't do much worth writing about, so I've commented it out
 //hopefully at some point will be able to link it up to the switches
@@ -224,7 +234,7 @@ class MainContainer extends Component {
   }
 
   handleEditChange = (e) => {
-    if(e.currentTarget.name === 'title'){
+    if(e.currentTarget.name === 'edit_title'){
       console.log(e.currentTarget, '<---- string');
       this.setState({
         moldToEdit: {
@@ -255,43 +265,43 @@ class MainContainer extends Component {
     e.preventDefault();
 
      try {
-       const editResponse = await fetch(apiUrl + '/api/v1/molds/' + this.state.moldToEdit._id, {
+      const editResponse = await fetch(apiUrl + '/api/v1/molds/' + this.state.moldToEdit._id, {
         method: 'PUT',
         body: JSON.stringify({
-          title: this.state.moldToEdit.title,
-          seed_song_id: this.state.moldToEdit.seed_song_id,
-          acoustic: this.state.moldToEdit.acoustic,
-          danceable: this.state.moldToEdit.danceable,
-          energetic: this.state.moldToEdit.energetic,
-          instrumental: this.state.moldToEdit.instrumental,
-          live: this.state.moldToEdit.live,
-          spoken: this.state.moldToEdit.spoken,
-          upbeat: this.state.moldToEdit.upbeat,  
+          title: this.state.edit_title,
+          seed_song_id: this.state.edit_seed_song_id,
+          acoustic: this.state.edit_acoustic,
+          danceable: this.state.edit_danceable,
+          energetic: this.state.edit_energetic,
+          instrumental: this.state.edit_instrumental,
+          live: this.state.edit_live,
+          spoken: this.state.edit_spoken,
+          upbeat: this.state.edit_upbeat,  
         }),
         headers: {
           'Content-Type': 'application/json'
         }
-       });
+      });
+      console.log(editResponse, '<------ edit response');
+      const editResponseParsed = await editResponse.json();
+      console.log(editResponseParsed, '<---- edit response parsed');
+      const newMoldArrayWithEdit = this.state.molds.map((mold) => {
+        if(mold._id === editResponseParsed.data._id){
+          mold = editResponseParsed.data
+        }
+        return mold
+      });
 
-       // const editResponseParsed = editResponse.json();
-       // const newMoldArrayWithEdit = this.state.molds.map((mold) => {
-       //   if(mold._id === editResponseParsed.data._id){
-       //    mold = editResponseParsed.data
-       //   }
+      this.setState({
+        showEditModal: false,
+        molds: newMoldArrayWithEdit
+      });
 
-       //   return mold
-       // });
+      console.log(editResponseParsed, ' parsed edit');
 
-     //   this.setState({
-     //    showEditModal: false,
-     //    molds: newMoldArrayWithEdit
-     //   });
-
-     //   console.log(editResponseParsed, ' parsed edit');
-
-     } catch(err){
-       console.log(err)
-     }
+    } catch(err){
+      console.log(err)
+    }
       
   }
 
@@ -321,7 +331,7 @@ class MainContainer extends Component {
                 <LibraryContainer topSongs={this.state.topSongs} retrieveSong={this.retrieveSong}/>
                 <Grid.Column id='molds' width={7}>
                   <MoldContainer handleValueChange={this.handleValueChange} currentSeed={this.state.currentSeed} addMold={this.addMold} />
-                  <MoldList molds={this.state.molds} deleteMold={this.deleteMold} openAndEdit={this.openAndEdit} />
+                  <MoldList molds={this.state.molds} deleteMold={this.deleteMold} openAndEdit={this.openAndEdit} getRecommended={this.getRecommended}/>
                   <EditModal open={this.state.showEditModal} moldToEdit={this.state.moldToEdit} handleEditChange={this.handleEditChange} closeAndEdit={this.closeAndEdit}/>
                 </Grid.Column>
               </Grid.Row>

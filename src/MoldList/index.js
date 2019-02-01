@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, Label } from 'semantic-ui-react';
+import { Card, Button, Label, Icon } from 'semantic-ui-react';
 
 const MoldList = (props) => {
 	const molds = props.molds.map((mold, i) => {
@@ -73,6 +73,7 @@ const MoldList = (props) => {
 					</Card.Description>
 				</Card.Content>
 				<Card.Content extra> 
+					<Button onClick={props.getRecommended(mold.seed_song_id)} icon labelPosition='left'><Icon name='play' />Play</Button>
 					<Button onClick={props.openAndEdit.bind(null, mold)}>Edit</Button>
           			<Button onClick={props.deleteMold.bind(null, mold._id)}>Delete</Button>
 				</Card.Content>
