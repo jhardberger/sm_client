@@ -1,4 +1,4 @@
-s
+
 # BeatGrinder #
 
 **BeatGrinder** is my attempt to create a more organic music discovery experience. It's a full-stack app built with React and Node.js that makes extensive use of the Spotify API. 
