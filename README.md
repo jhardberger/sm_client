@@ -3,9 +3,7 @@
 
 **BeatGrinder** is my attempt to create a more organic music discovery experience. It's a full-stack app built with React and Node.js that makes extensive use of the Spotify API. 
 
-A user can: 
-	-log in with their Spotify account
-	-create "grinds", never-ending playlists that can then be customized using the musical qualities that Spotify assigns, behind the scenes, to every song. 
+A user can log in with their Spotify account and create "grinds": never-ending playlists that can then be customized using the musical qualities that Spotify assigns, behind the scenes, to every song. 
 
 Think of a it as a responsive radio station that lets you set the vibe.
 
